@@ -43,7 +43,7 @@ export interface ReportData {
   title: string;
   selectedBlueBookListings: string[]; // Array of listing IDs
   functionalInputs: any; // SSAFormData from ssa-form.ts
-  generatedSections: GeneratedSection[];
+  generatedSections: any; // Map of question ID to generated text
   createdAt: number;
   lastModified: number;
 }

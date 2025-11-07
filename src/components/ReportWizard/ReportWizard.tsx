@@ -9,6 +9,7 @@ import { WizardProgress } from './WizardProgress';
 import { WizardNavigation } from './WizardNavigation';
 import { BlueBookSelection } from './steps/BlueBookSelection';
 import { FunctionalInputs } from './steps/FunctionalInputs';
+import { AIGeneration } from './steps/AIGeneration';
 import { Button } from '@/components/ui/Button';
 
 interface ReportWizardProps {
@@ -46,12 +47,7 @@ const WizardContent: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       case 2:
         return <FunctionalInputs />;
       case 3:
-        return (
-          <div className="text-center py-12">
-            <h3 className="text-xl font-semibold mb-2">Step 3: AI Generation</h3>
-            <p className="text-text-muted">Coming in Phase 2...</p>
-          </div>
-        );
+        return <AIGeneration />;
       case 4:
         return (
           <div className="text-center py-12">
@@ -72,7 +68,8 @@ const WizardContent: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         // Check if there's any data in functionalInputs
         return draftData.functionalInputs && Object.keys(draftData.functionalInputs).length > 0;
       case 3:
-        return (draftData.generatedSections?.length ?? 0) > 0;
+        // Check if there are any generated sections
+        return draftData.generatedSections && Object.keys(draftData.generatedSections).length > 0;
       default:
         return true;
     }
