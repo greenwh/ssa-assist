@@ -4,21 +4,25 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Alert } from '@/components/ui/Alert';
-import { Lock, Key, Cloud } from 'lucide-react';
+import { Lock, Key, Cloud, CheckCircle } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
 import { indexedDBService } from '@/services/storage/IndexedDBService';
 import { encryptionService } from '@/services/encryption/EncryptionService';
+import { hasEnvAPIKeys, getEnvConfiguredProviders, getAPIConfigFromEnv } from '@/utils/env';
 
 export const Settings: React.FC = () => {
   const { lock } = useAuthStore();
-  const [selectedLLM, setSelectedLLM] = useState<'gemini' | 'openai' | 'claude'>('gemini');
+  const [selectedLLM, setSelectedLLM] = useState<'gemini' | 'openai' | 'claude' | 'xai'>('gemini');
   const [apiKeys, setApiKeys] = useState({
     gemini: '',
     openai: '',
     claude: '',
+    xai: '',
   });
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const hasEnvKeys = hasEnvAPIKeys();
+  const envProviders = getEnvConfiguredProviders();
 
   useEffect(() => {
     loadSettings();
@@ -34,6 +38,18 @@ export const Settings: React.FC = () => {
         const decryptedKeys = await encryptionService.decrypt(config.encryptedAPIKeys);
         const keys = JSON.parse(decryptedKeys);
         setApiKeys(keys);
+      }
+
+      // Load environment variable API keys if available
+      if (hasEnvKeys) {
+        const envConfig = getAPIConfigFromEnv();
+        setApiKeys(prev => ({
+          ...prev,
+          gemini: envConfig.google?.apiKey || prev.gemini,
+          openai: envConfig.openai?.apiKey || prev.openai,
+          claude: envConfig.anthropic?.apiKey || prev.claude,
+          xai: envConfig.xai?.apiKey || prev.xai,
+        }));
       }
     } catch (err) {
       console.error('Failed to load settings:', err);
@@ -98,6 +114,24 @@ export const Settings: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
+          {/* Environment Variable Status */}
+          {hasEnvKeys && (
+            <Alert variant="success">
+              <div className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold">Environment Variables Detected</p>
+                  <p className="text-sm mt-1">
+                    API keys configured via .env file for: {envProviders.join(', ')}
+                  </p>
+                  <p className="text-xs mt-2 opacity-75">
+                    Environment variables take precedence over stored values
+                  </p>
+                </div>
+              </div>
+            </Alert>
+          )}
+
           {/* Provider Selection */}
           <div>
             <label className="block text-sm font-medium text-text mb-2">
@@ -111,6 +145,7 @@ export const Settings: React.FC = () => {
               <option value="gemini">Google Gemini</option>
               <option value="openai">OpenAI (GPT-4)</option>
               <option value="claude">Anthropic Claude</option>
+              <option value="xai">xAI (Grok)</option>
             </select>
           </div>
 
@@ -123,6 +158,7 @@ export const Settings: React.FC = () => {
               value={apiKeys.gemini}
               onChange={(e) => setApiKeys({ ...apiKeys, gemini: e.target.value })}
               helpText="Get your API key from Google AI Studio"
+              disabled={hasEnvKeys}
             />
             <Input
               type="password"
@@ -131,6 +167,7 @@ export const Settings: React.FC = () => {
               value={apiKeys.openai}
               onChange={(e) => setApiKeys({ ...apiKeys, openai: e.target.value })}
               helpText="Get your API key from platform.openai.com"
+              disabled={hasEnvKeys}
             />
             <Input
               type="password"
@@ -139,6 +176,16 @@ export const Settings: React.FC = () => {
               value={apiKeys.claude}
               onChange={(e) => setApiKeys({ ...apiKeys, claude: e.target.value })}
               helpText="Get your API key from console.anthropic.com"
+              disabled={hasEnvKeys}
+            />
+            <Input
+              type="password"
+              label="xAI (Grok) API Key"
+              placeholder="xai-..."
+              value={apiKeys.xai}
+              onChange={(e) => setApiKeys({ ...apiKeys, xai: e.target.value })}
+              helpText="Get your API key from console.x.ai"
+              disabled={hasEnvKeys}
             />
           </div>
 

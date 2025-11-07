@@ -7,7 +7,7 @@ import type { EncryptedData } from './encryption';
 export interface UserConfig {
   id: 'user-config';
   salt: string;                    // Base64-encoded salt
-  selectedLLM: 'gemini' | 'openai' | 'claude';
+  selectedLLM: 'gemini' | 'openai' | 'claude' | 'xai';
   encryptedAPIKeys: EncryptedData; // Encrypted JSON of API keys
   encryptedCloudConfig?: EncryptedData; // Optional cloud sync config
   lastModified: number;
