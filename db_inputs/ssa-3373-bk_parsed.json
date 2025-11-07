@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "parsed_at": "2025-11-06T19:42:36.274235",
+    "parser_version": "1.0.0",
+    "ai_provider": "grok",
+    "ai_model": "grok-4-fast-reasoning",
+    "schema_used": "ssa_3373_example_schema"
+  },
+  "data": {
+    "form_info": {
+      "form_number": "SSA-3373-BK",
+      "title": "FUNCTION REPORT - ADULT",
+      "revision_date": "02-2024"
+    },
+    "personal_information": {
+      "name": null,
+      "social_security_number": null,
+      "date_of_birth": null,
+      "daytime_phone": null,
+      "alternate_phone": null
+    },
+    "daily_activities": {
+      "wake_up_time": null,
+      "sleep_time": null,
+      "care_for_others": {
+        "cares_for": null,
+        "who": null,
+        "type_of_care": null
+      },
+      "care_for_pets": {
+        "has_pets": null,
+        "type_of_care": null
+      }
+    },
+    "personal_care": {
+      "bathing_dressing_care": {
+        "needs_help": null,
+        "details": null
+      },
+      "toileting": {
+        "needs_help": null,
+        "details": null
+      },
+      "feeding": {
+        "needs_help": null,
+        "details": null
+      },
+      "grooming": {
+        "shaving": null,
+        "hair_care": null,
+        "details": null
+      }
+    },
+    "household_activities": {
+      "prepare_meals": {
+        "frequency": null,
+        "types_of_meals": null,
+        "time_to_prepare": null,
+        "changes_before_illness": null
+      },
+      "house_and_yard_work": {
+        "activities": [],
+        "frequency": null,
+        "time_required": null,
+        "changes_before_illness": null
+      }
+    },
+    "going_places": {
+      "can_go_out_alone": null,
+      "go_out_frequency": null,
+      "places_go": [],
+      "transportation": {
+        "can_drive": null,
+        "drive_frequency": null,
+        "reasons_not_drive": null,
+        "use_public_transportation": null
+      },
+      "shopping": {
+        "can_shop": null,
+        "what_shop_for": null,
+        "frequency": null,
+        "changes_before_illness": null
+      },
+      "money_management": {
+        "can_handle_money": null,
+        "tasks": [],
+        "changes_before_illness": null
+      }
+    },
+    "social_activities": {
+      "hobbies_and_interests": {
+        "current_hobbies": [],
+        "frequency": null,
+        "changes_before_illness": null
+      },
+      "social_activities": {
+        "activities": [],
+        "frequency": null,
+        "changes_before_illness": null
+      },
+      "time_with_others": {
+        "frequency": null,
+        "location": null,
+        "changes_before_illness": null
+      }
+    },
+    "functional_limitations": {
+      "affected_abilities": [],
+      "lifting_capacity": null,
+      "walking_ability": {
+        "distance_before_rest": null,
+        "rest_duration": null
+      },
+      "memory_issues": null,
+      "concentration_issues": null,
+      "instruction_following": null,
+      "relationship_with_authority": null,
+      "stress_handling": null,
+      "routine_changes": null
+    },
+    "medications": [],
+    "signature": {
+      "name": null,
+      "date": null,
+      "relationship_to_claimant": null
+    },
+    "metadata": {
+      "created_at": "2024-01-15T10:00:00",
+      "name": "ssa_3373_example_schema",
+      "form_type": "SSA-3373-BK",
+      "description": "Example schema for SSA Function Report - Adult form"
+    }
+  }
+}
