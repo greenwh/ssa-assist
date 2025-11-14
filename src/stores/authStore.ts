@@ -83,9 +83,24 @@ export const useAuthStore = create<AuthState>((set) => ({
       await indexedDBService.saveConfig(config);
 
       // Cache Blue Book data
-      const bluebookData = await fetch('/data/bluebook/ssa_bluebook_adult_complete.json').then(
+      const baseUrl = import.meta.env.BASE_URL || '/';
+      const bluebookDataRaw = await fetch(`${baseUrl}data/bluebook/ssa_bluebook_adult_complete.json`.replace('//', '/')).then(
         (r) => r.json()
       );
+
+      // Transform data to match TypeScript interface
+      const bluebookData = bluebookDataRaw.map((item: any) => ({
+        listingId: item.listing_id,
+        category: item.listing_id.split('.')[0], // Extract category from listing_id (e.g., "1" from "1.00")
+        title: item.title,
+        url: item.url,
+        content_excerpt: item.content_excerpt,
+        headings: item.headings,
+        table_count: item.table_count,
+        is_adult_listing: item.is_adult_listing,
+        listing_name: item.listing_name,
+      }));
+
       await indexedDBService.cacheBlueBookListings(bluebookData);
 
       set({
@@ -129,6 +144,34 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       // Initialize encryption service
       await encryptionService.initialize(passphrase, salt);
+
+      // Check if Blue Book data is cached, if not, load it
+      const cachedListings = await indexedDBService.getAllBlueBookListings();
+      if (cachedListings.length === 0) {
+        try {
+          const baseUrl = import.meta.env.BASE_URL || '/';
+          const bluebookDataRaw = await fetch(`${baseUrl}data/bluebook/ssa_bluebook_adult_complete.json`.replace('//', '/')).then(
+            (r) => r.json()
+          );
+
+          // Transform data to match TypeScript interface
+          const bluebookData = bluebookDataRaw.map((item: any) => ({
+            listingId: item.listing_id,
+            category: item.listing_id.split('.')[0],
+            title: item.title,
+            url: item.url,
+            content_excerpt: item.content_excerpt,
+            headings: item.headings,
+            table_count: item.table_count,
+            is_adult_listing: item.is_adult_listing,
+            listing_name: item.listing_name,
+          }));
+
+          await indexedDBService.cacheBlueBookListings(bluebookData);
+        } catch (error) {
+          console.error('Failed to load Blue Book data:', error);
+        }
+      }
 
       set({
         isUnlocked: true,
