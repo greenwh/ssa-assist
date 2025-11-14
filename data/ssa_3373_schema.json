@@ -1,0 +1,429 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "SSA-3373-BK Function Report - Adult",
+  "description": "Schema for Social Security Administration Form SSA-3373-BK - Function Report for adults regarding disability claims",
+  "properties": {
+    "form_info": {
+      "type": "object",
+      "description": "Form identification information",
+      "properties": {
+        "form_number": {
+          "type": "string",
+          "description": "Form number",
+          "enum": ["SSA-3373-BK"]
+        },
+        "title": {
+          "type": "string",
+          "description": "Form title"
+        },
+        "revision_date": {
+          "type": "string",
+          "description": "Form revision date"
+        }
+      }
+    },
+    "personal_information": {
+      "type": "object",
+      "description": "Personal information of the claimant",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full name of person completing the form"
+        },
+        "social_security_number": {
+          "type": "string",
+          "pattern": "^\\d{3}-\\d{2}-\\d{4}$",
+          "description": "Social Security Number in XXX-XX-XXXX format"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "pattern": "^\\d{2}/\\d{2}/\\d{4}$",
+          "description": "Date of birth in MM/DD/YYYY format"
+        },
+        "daytime_phone": {
+          "type": "string",
+          "description": "Daytime phone number"
+        },
+        "alternate_phone": {
+          "type": "string",
+          "description": "Alternate phone number"
+        }
+      }
+    },
+    "daily_activities": {
+      "type": "object",
+      "description": "Information about daily activities and self-care",
+      "properties": {
+        "wake_up_time": {
+          "type": "string",
+          "description": "What time do you usually wake up?"
+        },
+        "sleep_time": {
+          "type": "string",
+          "description": "What time do you usually go to sleep?"
+        },
+        "care_for_others": {
+          "type": "object",
+          "properties": {
+            "cares_for": {
+              "type": "boolean",
+              "description": "Do you take care of anyone else?"
+            },
+            "who": {
+              "type": "string",
+              "description": "Who do you care for (children, spouse, parent, etc.)?"
+            },
+            "type_of_care": {
+              "type": "string",
+              "description": "What type of care do you provide?"
+            }
+          }
+        },
+        "care_for_pets": {
+          "type": "object",
+          "properties": {
+            "has_pets": {
+              "type": "boolean",
+              "description": "Do you take care of pets?"
+            },
+            "type_of_care": {
+              "type": "string",
+              "description": "What kind of care?"
+            }
+          }
+        }
+      }
+    },
+    "personal_care": {
+      "type": "object",
+      "description": "Personal care and grooming activities",
+      "properties": {
+        "bathing_dressing_care": {
+          "type": "object",
+          "properties": {
+            "needs_help": {
+              "type": "boolean",
+              "description": "Do you need help or reminders with bathing, dressing, or personal care?"
+            },
+            "details": {
+              "type": "string",
+              "description": "Explain what help you need"
+            }
+          }
+        },
+        "toileting": {
+          "type": "object",
+          "properties": {
+            "needs_help": {
+              "type": "boolean"
+            },
+            "details": {
+              "type": "string"
+            }
+          }
+        },
+        "feeding": {
+          "type": "object",
+          "properties": {
+            "needs_help": {
+              "type": "boolean"
+            },
+            "details": {
+              "type": "string"
+            }
+          }
+        },
+        "grooming": {
+          "type": "object",
+          "properties": {
+            "shaving": {
+              "type": "boolean"
+            },
+            "hair_care": {
+              "type": "boolean"
+            },
+            "details": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "household_activities": {
+      "type": "object",
+      "description": "Household tasks and activities",
+      "properties": {
+        "prepare_meals": {
+          "type": "object",
+          "properties": {
+            "frequency": {
+              "type": "string",
+              "description": "How often do you prepare meals?"
+            },
+            "types_of_meals": {
+              "type": "string",
+              "description": "What types of meals do you prepare?"
+            },
+            "time_to_prepare": {
+              "type": "string",
+              "description": "How long does it take?"
+            },
+            "changes_before_illness": {
+              "type": "string",
+              "description": "Did your illnesses or conditions affect your ability to prepare meals?"
+            }
+          }
+        },
+        "house_and_yard_work": {
+          "type": "object",
+          "properties": {
+            "activities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "What household chores or yard work do you do?"
+            },
+            "frequency": {
+              "type": "string",
+              "description": "How often?"
+            },
+            "time_required": {
+              "type": "string",
+              "description": "How long does it take?"
+            },
+            "changes_before_illness": {
+              "type": "string",
+              "description": "Did your illnesses or conditions affect your ability to do these activities?"
+            }
+          }
+        }
+      }
+    },
+    "going_places": {
+      "type": "object",
+      "description": "Transportation and going out",
+      "properties": {
+        "can_go_out_alone": {
+          "type": "boolean",
+          "description": "Can you go out alone?"
+        },
+        "go_out_frequency": {
+          "type": "string",
+          "description": "How often do you go out?"
+        },
+        "places_go": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Where do you go?"
+        },
+        "transportation": {
+          "type": "object",
+          "properties": {
+            "can_drive": {
+              "type": "boolean"
+            },
+            "drive_frequency": {
+              "type": "string"
+            },
+            "reasons_not_drive": {
+              "type": "string"
+            },
+            "use_public_transportation": {
+              "type": "boolean"
+            }
+          }
+        },
+        "shopping": {
+          "type": "object",
+          "properties": {
+            "can_shop": {
+              "type": "boolean"
+            },
+            "what_shop_for": {
+              "type": "string"
+            },
+            "frequency": {
+              "type": "string"
+            },
+            "changes_before_illness": {
+              "type": "string"
+            }
+          }
+        },
+        "money_management": {
+          "type": "object",
+          "properties": {
+            "can_handle_money": {
+              "type": "boolean"
+            },
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "What money tasks do you handle? (pay bills, use checkbook, use money orders, count change)"
+            },
+            "changes_before_illness": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "social_activities": {
+      "type": "object",
+      "description": "Social activities and interactions",
+      "properties": {
+        "hobbies_and_interests": {
+          "type": "object",
+          "properties": {
+            "current_hobbies": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "frequency": {
+              "type": "string"
+            },
+            "changes_before_illness": {
+              "type": "string"
+            }
+          }
+        },
+        "social_activities": {
+          "type": "object",
+          "properties": {
+            "activities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "frequency": {
+              "type": "string"
+            },
+            "changes_before_illness": {
+              "type": "string"
+            }
+          }
+        },
+        "time_with_others": {
+          "type": "object",
+          "properties": {
+            "frequency": {
+              "type": "string",
+              "description": "How often do you spend time with others?"
+            },
+            "location": {
+              "type": "string",
+              "description": "Where do you go or what do you do?"
+            },
+            "changes_before_illness": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "functional_limitations": {
+      "type": "object",
+      "description": "Effects of illness/injury on functional abilities",
+      "properties": {
+        "affected_abilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Which abilities are affected? (lifting, squatting, bending, standing, reaching, walking, sitting, kneeling, climbing stairs, remembering, completing tasks, concentrating, understanding, following instructions, using hands, getting along with others)"
+        },
+        "lifting_capacity": {
+          "type": "string",
+          "description": "How much weight can you lift?"
+        },
+        "walking_ability": {
+          "type": "object",
+          "properties": {
+            "distance_before_rest": {
+              "type": "string"
+            },
+            "rest_duration": {
+              "type": "string"
+            }
+          }
+        },
+        "memory_issues": {
+          "type": "boolean"
+        },
+        "concentration_issues": {
+          "type": "boolean"
+        },
+        "instruction_following": {
+          "type": "string",
+          "description": "How well do you follow written/spoken instructions?"
+        },
+        "relationship_with_authority": {
+          "type": "string",
+          "description": "Have you ever been fired or laid off because of problems getting along with others?"
+        },
+        "stress_handling": {
+          "type": "string",
+          "description": "How do you handle stress?"
+        },
+        "routine_changes": {
+          "type": "string",
+          "description": "How do you handle changes in routine?"
+        }
+      }
+    },
+    "medications": {
+      "type": "array",
+      "description": "Current medications",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "side_effects": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "description": "Form signature information",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "pattern": "^\\d{2}/\\d{2}/\\d{4}$"
+        },
+        "relationship_to_claimant": {
+          "type": "string",
+          "description": "If not the claimant, relationship to claimant"
+        }
+      }
+    }
+  },
+  "required": [
+    "form_info",
+    "personal_information"
+  ],
+  "metadata": {
+    "created_at": "2024-01-15T10:00:00",
+    "name": "ssa_3373_example_schema",
+    "form_type": "SSA-3373-BK",
+    "description": "Example schema for SSA Function Report - Adult form"
+  }
+}
